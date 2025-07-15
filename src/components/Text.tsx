@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { ElementType } from 'react';
+import { colors } from '../style/colors';
 
 type Variant = 'Title' | 'Mtitle' | 'Stitle' | 'Label' | 'Caption' | 'Button';
 
@@ -43,9 +44,25 @@ export const getVariantStyle = (variant?: Variant) => {
   }
 };
 
+const resolveColor = (color?: string) => {
+  if (!color) return '#000';
+  const [group, shade] = color.split('.');
+  const shadeNum = Number(shade);
+
+  if (
+    group in colors &&
+    !isNaN(shadeNum) &&
+    shadeNum in (colors as any)[group]
+  ) {
+    return (colors as any)[group][shadeNum];
+  }
+  return color;
+};
+
+
 export const Text = styled.span<TextProps>`
   ${({ variant }) => getVariantStyle(variant)}
-  color: ${({ color }) => color || '#000'};
+  color: ${({ color }) => resolveColor(color)};
   font-weight: ${({ weight }) => weight || 'inherit'};
   text-align: ${({ align }) => align || 'left'};
 `;

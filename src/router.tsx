@@ -3,6 +3,7 @@ import { GlobalStyle } from "./style/globalStyle.style";
 import { Home } from "./pages/home";
 import { ThemeProvider } from 'styled-components';
 import { theme } from './style/themes';
+import { Matching } from "./pages/matching";
 
 export const Router = () => {
     return (
@@ -10,7 +11,8 @@ export const Router = () => {
             <BrowserRouter>
                 <GlobalStyle/>
                 <Routes>
-                    <Route path="/" element={<Home/>}></Route>
+                    <Route path="/" element={<Home/>} />
+                    <Route path="/matching" element={<Matching />}/>
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
