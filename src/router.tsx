@@ -7,6 +7,7 @@ import { Matching } from "./pages/matching";
 import { NoChatting } from "./pages/chatting/noChatting";
 import { Profile } from "./pages/profile";
 import { Chatting } from "./pages/chatting";
+import { FirstPage } from "./pages/mentoring/firstPage";
 
 export const Router = () => {
     return (
@@ -19,6 +20,7 @@ export const Router = () => {
                     <Route path="/noChatting" element={<NoChatting />}/>
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/chatting" element={<Chatting />}/>
+                    <Route path="/firstPage" element={<FirstPage/>}></Route>
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
