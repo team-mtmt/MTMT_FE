@@ -11,6 +11,7 @@ import { FirstPage } from "./pages/mentoring/firstPage";
 import { SecondPage } from "./pages/mentoring/secondPage";
 import { ThirdPage } from "./pages/mentoring/thirdPage";
 import { ReviewStart } from "./pages/review/start";
+import { ReviewWrite } from "./pages/review/write";
 
 export const Router = () => {
     return (
@@ -27,6 +28,7 @@ export const Router = () => {
                     <Route path="/secondPage" element={<SecondPage />}/>
                     <Route path="/thirdPage" element={<ThirdPage />}/>
                     <Route path="/reviewStart" element={<ReviewStart />}/>
+                    <Route path="/reviewWrite" element={<ReviewWrite />}/>
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
