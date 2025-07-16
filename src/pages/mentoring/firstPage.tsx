@@ -17,7 +17,7 @@ export const FirstPage = () => {
           </TextWrapper>
         </SubWrapper>
         <NextButton>
-          <Text variant="Caption" color="white">
+          <Text variant="Caption" color="white" weight={700}>
             다음
           </Text>
         </NextButton>
