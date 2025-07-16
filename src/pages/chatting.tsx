@@ -1,17 +1,36 @@
 import styled from "styled-components"
 import { Text } from "../components/Text";
-import RatingImg from "../assets/imgs/ratings/veryGood.svg";
 import { Tag } from "../components/tag";
 import { Message } from "../components/message";
 import SendIcon from "../assets/imgs/sendIcon.svg";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 const messages = [
     { id: 1, isMine: false, text: "안녕하세요." },
     { id: 2, isMine: false, text: "오늘도 좋은 하루 보내세요." },
     { id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },{ id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },{ id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },
+    { id: 3, isMine: true, text: "감사합니다." },{ id: 3, isMine: true, text: "감사합니다." },{ id: 3, isMine: true, text: "감사합니다." },{ id: 3, isMine: true, text: "감사합니다." },
 ];
 
 export const Chatting = () => {
+    const bottomRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "auto" });
+    }, []);
+
     return (
         <Wrapper>
             <SubWrapper>
@@ -20,18 +39,20 @@ export const Chatting = () => {
                         <ProfileImg />
                         <NameWrapper>
                             <Text variant="Caption">손희찬</Text>
-                            <img src={RatingImg} alt="" />
                         </NameWrapper>
                     </ProfileWrapper>
                     <RightWrapper>
-                        <TimeBox>29:57</TimeBox>
                         <Tag />
                     </RightWrapper>
                 </TopWrpaper>
+                <FinishBox>
+                    <TextWrapper>
+                        <Text variant="Caption">마무리 하기</Text>
+                        <Text variant="Caption" color="gray.700">(0/2)</Text>
+                    </TextWrapper>
+                    <FinishButton>끝내기</FinishButton>
+                </FinishBox>
                 <ContentWrapper>
-                    <RespectBox>
-                        <Text variant="Button" color="white">서로 존중하고 배우는 대화를 진행 해주세요.</Text>
-                    </RespectBox>
                     <DateLine>
                         <DateBox>
                             <Text variant="Button" color="gray.200">7월 15일</Text>
@@ -43,11 +64,12 @@ export const Chatting = () => {
                         const marginTop = isSameSender ? 4 : 16;
 
                         return (
-                            <Message key={msg.id} isMine={msg.isMine} marginTop={marginTop}>
+                            <Message key={`${index}-${msg.text}`} isMine={msg.isMine} marginTop={marginTop}>
                                 {msg.text}
                             </Message>
                         );
                     })}
+                    <div ref={bottomRef} />
                 </ContentWrapper>
             </SubWrapper>
             <BottomWrapper>
@@ -70,6 +92,8 @@ const Wrapper = styled.div`
 const SubWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
 `;
 
 const TopWrpaper = styled.div`
@@ -78,6 +102,10 @@ const TopWrpaper = styled.div`
     padding: 7px 24px 7px 12px;
     justify-content: space-between;
     border-bottom: 0.2px solid ${({theme}) => theme.colors.gray[200]};
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
 `;
 
 const ProfileWrapper = styled.div`
@@ -105,18 +133,6 @@ const RightWrapper = styled.div`
     gap: 12px;
 `;
 
-const TimeBox = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid ${({theme}) => theme.colors.main[500]};
-    border-radius: 50px;
-    width: 113px;
-    height: 21px;
-    color: ${({theme}) => theme.colors.main[500]};
-    font-size: 11px;
-`;
-
 const ContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -124,15 +140,19 @@ const ContentWrapper = styled.div`
     align-items: center;
 `;
 
-const RespectBox = styled.div`
+const FinishBox = styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
-    border: 1px solid ${({theme}) => theme.colors.main[200]};
-    padding: 11px 27px;
-    width: fit-content;
-    background-color: ${({theme}) => theme.colors.main[300]};
-    border-radius: 50px;
+    border-bottom: 0.4px solid ${({theme}) => theme.colors.gray[200]};
+    border-top: 0.4px solid ${({theme}) => theme.colors.gray[200]};
+    padding: 10px 24px;
+    height: 47px;
+    width: 100%;
+    gap: 8px;
+    position: sticky;
+    top: 46px; 
+    background-color: white;
+    z-index: 9;
 `;
 
 const DateLine = styled.div`
@@ -185,4 +205,24 @@ const SendButton = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+
+const TextWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+`;
+
+const FinishButton = styled.button`
+    width: 62px;
+    height: 27px;
+    border-radius: 50px;
+    background-color: ${({theme}) => theme.colors.main[500]};
+    border: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
 `;
