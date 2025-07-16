@@ -12,6 +12,10 @@ import { SecondPage } from "./pages/mentoring/secondPage";
 import { ThirdPage } from "./pages/mentoring/thirdPage";
 import { ReviewStart } from "./pages/review/start";
 import { ReviewWrite } from "./pages/review/write";
+import { ProfileEdit } from "./pages/profile/edit";
+import { ProfileIntroEdit } from "./pages/profile/introduceEdit";
+import { Curriculum } from "./pages/profile/curriculum";
+import { Mento } from "./pages/mento";
 
 export const Router = () => {
     return (
@@ -29,6 +33,10 @@ export const Router = () => {
                     <Route path="/thirdPage" element={<ThirdPage />}/>
                     <Route path="/reviewStart" element={<ReviewStart />}/>
                     <Route path="/reviewWrite" element={<ReviewWrite />}/>
+                    <Route path="/edit" element={<ProfileEdit />}/>
+                    <Route path="/editIntro" element={<ProfileIntroEdit/>}/>
+                    <Route path="/curriculum" element={<Curriculum/>}/>
+                    <Route path="/mento" element={<Mento />}/>
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
