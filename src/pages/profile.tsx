@@ -6,10 +6,28 @@ import { useState } from "react";
 import { ProfileIntro } from "../components/profileInfo";
 import { ProfileReview } from "../components/profileInfo";
 import { ProfileCurriculum } from "../components/profileInfo";
+import { Toast } from "../components/toast";
 
 export const Profile = () => {
+    const [toastVisible, setToastVisible] = useState(false);
+    const [toastFadeClass, setToastFadeClass] = useState("fade-in");
+    const [active, setActive] = useState<boolean>(true);
     const [selected, setSelected] = useState<number | 0>(0);
     const categories = ['자기소개', '후기', '커리큘럼'];
+
+    const handleApplyClick = () => {
+        setActive(false);
+        setToastVisible(true);
+        setToastFadeClass("fade-in"); 
+      
+        setTimeout(() => {
+          setToastFadeClass("fade-out"); 
+        }, 1500);
+      
+        setTimeout(() => {
+          setToastVisible(false); 
+        }, 2000);
+    }
 
     return (
         <Wrapper>
@@ -55,8 +73,13 @@ export const Profile = () => {
                     {selected === 2 && <ProfileCurriculum />}
                 </ContentWrapper>
             </Container>
+            {toastVisible && (
+                <ToastContainer className={toastFadeClass}>
+                    <Toast content="신청이 완료되었습니다!" />
+                </ToastContainer>
+            )}
             <BottomWrapper>
-                <Button>
+                <Button $active={active} onClick={handleApplyClick} disabled={!active}>
                     <Text variant="Caption" color="white">신청하기</Text>
                 </Button>
             </BottomWrapper>
@@ -168,11 +191,11 @@ const BottomWrapper = styled.div`
     padding: 12px 24px 20px 24px;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{$active: boolean}>`
     width: 100%;
     height: 57px;
     border: none;
-    background-color: ${({theme}) => theme.colors.main[500]};
+    background-color: ${({theme, $active}) => ($active ? theme.colors.main[500] : theme.colors.gray[500])};
     border-radius: 10px;
     outline: none;
 `;
@@ -181,4 +204,22 @@ const ContentWrapper = styled.div`
     padding: 12px 24px;
     flex: 1;
     overflow-y: auto;
+`;
+
+const ToastContainer = styled.div`
+    position: fixed;
+    bottom: 90px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+
+    &.fade-in {
+        opacity: 1;
+    }
+
+    &.fade-out {
+        opacity: 0;
+    }
 `;

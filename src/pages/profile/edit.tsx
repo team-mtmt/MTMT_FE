@@ -66,7 +66,7 @@ export const ProfileEdit = () => {
             </SubWrapper>
             {toastVisible && (
                 <ToastWrapper className={toastFadeClass}>
-                    <Toast />
+                    <Toast content="변경 사항이 저장되었어요!"/>
                 </ToastWrapper>
             )}
             <Button onClick={handleSaveClick}>

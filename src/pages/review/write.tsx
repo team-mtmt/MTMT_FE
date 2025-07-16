@@ -2,8 +2,13 @@ import styled from "styled-components"
 import { Text } from "../../components/Text";
 import RatingImg from "../../assets/imgs/ratings/veryBad.svg";
 import { ReviewBox } from "../../components/reviewBox";
+import { useNavigate } from "react-router-dom";
 
 export const ReviewWrite = () => {
+    const navigate = useNavigate();
+    const handleNext = () => {
+        navigate('/chatting');
+    }
     const reviewTexts = [
         "시간 약속을 잘 지켜요.",
         "설명이 정말 이해하기 쉬웠어요.",
@@ -47,7 +52,7 @@ export const ReviewWrite = () => {
                     </ReviewBoxWrapper>
                 </GapContainer>
             </ContentWrapper>
-            <Button>
+            <Button onClick={handleNext}>
                 <Text variant="Caption" weight={700} color="white">완료</Text>
             </Button>
         </Wrapper>
