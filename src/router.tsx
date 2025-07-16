@@ -9,6 +9,7 @@ import { Profile } from "./pages/profile";
 import { Chatting } from "./pages/chatting";
 import { FirstPage } from "./pages/mentoring/firstPage";
 import { SecondPage } from "./pages/mentoring/secondPage";
+import { ThirdPage } from "./pages/mentoring/thirdPage";
 
 export const Router = () => {
     return (
@@ -23,6 +24,7 @@ export const Router = () => {
                     <Route path="/chatting" element={<Chatting />}/>
                     <Route path="/firstPage" element={<FirstPage/>} />
                     <Route path="/secondPage" element={<SecondPage />}/>
+                    <Route path="/thirdPage" element={<ThirdPage />}/>
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
