@@ -29,8 +29,8 @@ const Wrapper = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: center; */
+  align-items: center;
+  justify-content: center;
   padding: 20px 24px;
 `;
 
@@ -39,13 +39,15 @@ const SubWrapper = styled.div`
     flex-direction: column;
     gap: 24px;
     align-items: center;
+    flex: 1;
+    justify-content: center;
 `; 
 
 const TextWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`
+`;
 
 const NextButton = styled.button`
     /* width: 345px; */
