@@ -1,8 +1,10 @@
 import styled from "styled-components"
 import { Text } from "../../components/Text";
 import CheckIcon from "../../assets/imgs/checkIcon.svg";
+import { useNavigate } from "react-router-dom";
 
 export const SecondPage = () => {
+    const navigate = useNavigate();
     const participatedDays = [3, 6];
     const dayNumbers = [1, 2, 3, 4, 5, 6, 7];
     const fullDayNames = [
@@ -19,6 +21,10 @@ export const SecondPage = () => {
     const rotatedDayNames = [...fullDayNames.slice(today), ...fullDayNames.slice(0, today)];
     const lastDay = rotatedDayNames[6].day;
     const isLastDay = today === lastDay;
+
+    const handleNext = () => {
+        navigate('/thirdPage');
+    }
 
     return (
         <Wrapper>
@@ -66,7 +72,7 @@ export const SecondPage = () => {
                 </DateBox>
             </ContentWrapper>
             <BottomWrapper>
-                <Button>
+                <Button onClick={handleNext}>
                     <Text variant="Caption" weight={700} color="white">다음</Text>
                 </Button>
             </BottomWrapper>

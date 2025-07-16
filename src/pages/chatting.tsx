@@ -5,6 +5,7 @@ import { Message } from "../components/message";
 import SendIcon from "../assets/imgs/sendIcon.svg";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const messages = [
     { id: 1, isMine: false, text: "안녕하세요." },
@@ -50,7 +51,9 @@ export const Chatting = () => {
                         <Text variant="Caption">마무리 하기</Text>
                         <Text variant="Caption" color="gray.700">(0/2)</Text>
                     </TextWrapper>
-                    <FinishButton>끝내기</FinishButton>
+                    <Link to={'/firstPage'}>
+                        <FinishButton>끝내기</FinishButton>
+                    </Link>
                 </FinishBox>
                 <ContentWrapper>
                     <DateLine>

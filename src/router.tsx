@@ -24,7 +24,7 @@ export const Router = () => {
                 <GlobalStyle/>
                 <Routes>
                     <Route path="/" element={<Home/>} />
-                    <Route path="/matching" element={<Matching />}/>
+                    <Route path="/findMento" element={<Matching />}/>
                     <Route path="/noChatting" element={<NoChatting />}/>
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/chatting" element={<Chatting />}/>

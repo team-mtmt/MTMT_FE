@@ -2,8 +2,10 @@ import styled from "styled-components"
 import { Text } from "../../components/Text";
 import Characters from "../../assets/imgs/characters.svg";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ReviewStart = () => {
+    const navigate = useNavigate();
     const [showReviewPrompt, setShowReviewPrompt] = useState(false);
     const [fade, setFade] = useState(true); 
     const [displayPrompt, setDisplayPrompt] = useState(false); 
@@ -23,6 +25,10 @@ export const ReviewStart = () => {
             clearTimeout(timer3);
         }
     }, []);
+
+    const handleNext = () => {
+        navigate('/reviewWrite')
+    }
 
     return (
         <Wrapper>
@@ -45,7 +51,7 @@ export const ReviewStart = () => {
                 )}
             </ContentWrapper>
             <ButtonWrapper>
-                <Button active={showReviewPrompt}>
+                <Button onClick={handleNext} active={showReviewPrompt}>
                     <Text variant="Caption" weight={700} color="white">다음</Text>
                 </Button>
             </ButtonWrapper>

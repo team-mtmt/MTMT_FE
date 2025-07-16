@@ -1,8 +1,11 @@
 import styled from "styled-components"
 import ExpIcon from "../../assets/imgs/expIcon.svg";
 import { Text } from "../../components/Text";
+import { useNavigate } from "react-router-dom";
 
 export const ThirdPage = () => {
+    const navigate = useNavigate();
+    const handleNext = () => {navigate('/reviewStart')};
     return (
         <Wrapper>
             <ContentWrapper>
@@ -12,7 +15,7 @@ export const ThirdPage = () => {
                     <Text variant="Mtitle" color="gray.900" weight={700}>+ 50 exp를 얻었어요!</Text>
                 </TextWrapper>
             </ContentWrapper>
-            <Button>
+            <Button onClick={handleNext}>
                 <Text variant="Caption" weight={700} color="white">확인</Text>
             </Button>
         </Wrapper>

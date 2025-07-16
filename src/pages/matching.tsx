@@ -3,11 +3,12 @@ import { Text } from "../components/Text";
 import { useState } from "react";
 import RatingImg from "../assets/imgs/ratings/veryGood.svg";
 import { Tag } from "../components/tag";
+import { Link } from "react-router-dom";
 
 export const Matching = () => {
     const [selected, setSelected] = useState<number | 0>(0);
     const categories = ['운동', '음악', '미술'];
-    
+
     return (
         <Wrapper>
             <TextWrapper>
@@ -22,17 +23,19 @@ export const Matching = () => {
                 ))}
             </SelectBarWrapper>
             <ContentBoxWrapper>
-                <ContentBox>
-                    <Picture />
-                    <ContentWrapper>
-                        <NameWrapper>
-                            <Text variant="Caption">손희찬</Text>
-                            <img src={RatingImg} alt="" />
-                        </NameWrapper>
-                        <Text color="gray.700" variant="Button">대전광역시, 중구</Text>
-                        <Tag />
-                    </ContentWrapper>
-                </ContentBox>
+                <Link to={'/profile'}>
+                    <ContentBox>
+                        <Picture />
+                        <ContentWrapper>
+                            <NameWrapper>
+                                <Text variant="Caption">손희찬</Text>
+                                <img src={RatingImg} alt="" />
+                            </NameWrapper>
+                            <Text color="gray.700" variant="Button">대전광역시, 중구</Text>
+                            <Tag />
+                        </ContentWrapper>
+                    </ContentBox>
+                </Link>
                 <ContentBox>
                     <Picture />
                     <ContentWrapper>

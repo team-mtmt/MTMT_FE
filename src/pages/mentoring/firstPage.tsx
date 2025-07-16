@@ -1,8 +1,14 @@
 import styled from "styled-components"
 import { Text } from "../../components/Text";
 import MentoringEndImg from "../../assets/imgs/mentoringEnds.svg";
+import { useNavigate } from "react-router-dom";
 
 export const FirstPage = () => {
+    const navigate = useNavigate(); 
+
+    const handleNext = () => {
+        navigate("/secondPage");
+    };
     return (
       <Wrapper>
         <SubWrapper>
@@ -16,7 +22,7 @@ export const FirstPage = () => {
             </Text>
           </TextWrapper>
         </SubWrapper>
-        <NextButton>
+        <NextButton onClick={handleNext}>
           <Text variant="Caption" color="white" weight={700}>
             다음
           </Text>
