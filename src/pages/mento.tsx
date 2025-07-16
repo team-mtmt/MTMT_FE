@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import { Text } from "../components/Text";
 import { useState } from "react";
-import { Tag } from "../components/tag";
 
 export const Mento = () => {
     const [selected, setSelected] = useState<number | 0>(0);
@@ -30,7 +29,6 @@ export const Mento = () => {
                                 <Text variant="Button" color="main.500">Lv. 1</Text>
                             </NameWrapper>
                             <Text color="gray.700" variant="Button">대전광역시, 중구</Text>
-                            <Tag />
                         </ContentWrapper>
                     </ContentBox>
                     <ButtonWrapper>
@@ -92,6 +90,7 @@ const ContentBoxSubWrapper = styled.div`
 const ContentBox = styled.div`
     display: flex;
     gap: 12px;
+    align-items: center;
 `;
 
 const Picture = styled.div`
@@ -103,7 +102,7 @@ const Picture = styled.div`
 const ContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 3px;
 `;
 
 const NameWrapper = styled.div`

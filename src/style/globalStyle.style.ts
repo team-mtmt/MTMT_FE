@@ -67,7 +67,6 @@ td {
   box-sizing: border-box;
 }
 textarea {
-  resize: none;
 }
 body {
   color: black;
