@@ -65,4 +65,5 @@ export const Text = styled.span<TextProps>`
   color: ${({ color }) => resolveColor(color)};
   font-weight: ${({ weight }) => weight || 'inherit'};
   text-align: ${({ align }) => align || 'left'};
+  white-space: pre-line;
 `;

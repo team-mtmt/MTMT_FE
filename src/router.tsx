@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './style/themes';
 import { Matching } from "./pages/matching";
 import { NoChatting } from "./pages/chatting/noChatting";
+import { Profile } from "./pages/profile";
 
 export const Router = () => {
     return (
@@ -15,6 +16,7 @@ export const Router = () => {
                     <Route path="/" element={<Home/>} />
                     <Route path="/matching" element={<Matching />}/>
                     <Route path="/noChatting" element={<NoChatting />}/>
+                    <Route path="/profile" element={<Profile />}></Route>
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>

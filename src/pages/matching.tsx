@@ -7,6 +7,7 @@ import { Tag } from "../components/tag";
 export const Matching = () => {
     const [selected, setSelected] = useState<number | 0>(0);
     const categories = ['운동', '음악', '미술', '과학'];
+    
     return (
         <Wrapper>
             <TextWrapper>
