@@ -22,8 +22,10 @@ export const Message = ({ isMine, children, marginTop = 16 }: MessageProps) => {
 const MessageWrapper = styled.div<{$isMine: boolean; $marginTop: number}>`
     display: flex;
     justify-content: ${({ $isMine }) => ($isMine ? "flex-end" : "flex-start")};
-    width: 100%;
     margin-top: ${({ $marginTop }) => $marginTop}px;
+    width: 100%;
+    white-space: pre-wrap;
+    word-break: break-word;
 `;
 
 const MessageBox = styled.div<{$isMine: boolean}>`

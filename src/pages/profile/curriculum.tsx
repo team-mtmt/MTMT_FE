@@ -1,8 +1,13 @@
 import styled from "styled-components"
 import { Text } from "../../components/Text";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { postCurriculum } from "../../apis";
+import { curriculumArray } from "../../apis/type";
 
 export const Curriculum = () => {
+    const [curriculums, setCurriculums] = useState<curriculumArray[]>(
+        Array.from({ length: 7 }).map((_, i) => ({ day: i + 1, content: "" }))
+    );
     const textareaRefs = useRef<HTMLTextAreaElement[]>([]);
 
     const handleChange = (index: number) => {
@@ -12,6 +17,21 @@ export const Curriculum = () => {
             textarea.style.height = `${textarea.scrollHeight}px`;
         }
     };
+
+    const handleContentChange = (index: number, value: string) => {
+        setCurriculums((prev) =>
+          prev.map((item, i) => (i === index ? { ...item, content: value } : item))
+        );
+    };
+
+    const handleSubmit = async () => {
+        try {
+          await postCurriculum({ curriculums });
+        } catch (error) {
+          console.error("커리큘럼 등록 실패:", error);
+        }
+    };
+
     return (
         <Wrapper>
             <Text variant="Label" weight={700}>커리큘럼</Text>
@@ -24,13 +44,17 @@ export const Curriculum = () => {
                             ref={(el) => {
                                 textareaRefs.current[i] = el!;
                             }}
-                            onChange={() => handleChange(i)}
+                            value={curriculums[i].content}
+                            onChange={(e) => {
+                                handleContentChange(i, e.target.value);
+                                handleChange(i);
+                            }}
                             rows={1}
                         />
                     </DayBlock>
                 ))}
             </ContentWrapper>
-            <Button>
+            <Button onClick={handleSubmit}>
                 <Text variant="Caption" weight={700} color="white">작성 완료</Text>
             </Button>
         </Wrapper>

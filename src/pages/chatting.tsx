@@ -3,34 +3,112 @@ import { Text } from "../components/Text";
 import { Tag } from "../components/tag";
 import { Message } from "../components/message";
 import SendIcon from "../assets/imgs/sendIcon.svg";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
+import { putMentoringEnd } from "../apis";
+import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
-
-const messages = [
-    { id: 1, isMine: false, text: "안녕하세요." },
-    { id: 2, isMine: false, text: "오늘도 좋은 하루 보내세요." },
-    { id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },{ id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },{ id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },
-    { id: 3, isMine: true, text: "감사합니다." },{ id: 3, isMine: true, text: "감사합니다." },{ id: 3, isMine: true, text: "감사합니다." },{ id: 3, isMine: true, text: "감사합니다." },
-];
 
 export const Chatting = () => {
     const bottomRef = useRef<HTMLDivElement | null>(null);
+    const [loading, setLoading] = useState(false);
+    const mentoringId = "mentoring-id-123";
+    const [finishCount, setFinishCount] = useState(0); 
+    const [waitingForOther, setWaitingForOther] = useState(false);
+    const navigate = useNavigate();
+    const [inputText, setInputText] = useState("");
+    const socketRef = useRef<any>(null);
+
+    const token = localStorage.getItem("accessToken");
+
+    const [messages, setMessages] = useState<{ id: number; isMine: boolean; text: string }[]>([]);
+
+    const handleFinish = async () => {
+        if (loading) return;
+        setLoading(true);
+      
+        try {
+          const res = await putMentoringEnd(mentoringId);
+          const { waitingForOther } = res.data;
+      
+          setFinishCount(1);
+          setWaitingForOther(waitingForOther);
+      
+          if (!waitingForOther) {
+            navigate('/firstPage');
+          }
+        } catch (error) {
+          console.error("멘토링 종료 실패", error);
+          navigate('/firstPage');
+        } finally {
+          setLoading(false);
+          navigate('/firstPage');
+        }
+    };
 
     useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: "auto" });
-    }, []);
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+    
+    useEffect(() => {
+        // 소켓 연결
+        const socket = io("http://localhost:3000", {
+          auth: { token },
+          transports: ["websocket", "polling"],
+        });
+        socketRef.current = socket;
+    
+        socket.on("connect", () => {
+          console.log("✅ Socket connected:", socket.id);
+          // 채팅방 입장 이벤트
+          socket.emit("join-chat", { mentoringId });
+        });
+    
+        socket.on("connect_error", (error: Error) => {
+          console.error("❌ Connection failed:", error.message);
+          if (error.message === "Authentication error") {
+            // 토큰 재발급 or 로그아웃 처리 등
+            alert("인증에 실패했습니다. 다시 로그인 해주세요.");
+          }
+        });
+    
+        socket.on("disconnect", (reason: string) => {
+          console.log("🔌 Disconnected:", reason);
+        });
+    
+        // 서버에서 메시지 받을 때 이벤트
+        socket.on("receive-message", (data: { mentoringId: string; message: string; senderId: string }) => {
+          // 메시지 받으면 messages 상태에 추가 (내가 보낸 메시지 아니면 isMine: false)
+          setMessages((prev) => [
+            ...prev,
+            { id: Date.now(), isMine: false, text: data.message },
+          ]);
+        });
+    
+        return () => {
+          socket.emit("leave-chat", { mentoringId });
+          socket.disconnect();
+        };
+    }, [mentoringId, token]);
+
+    const handleSendMessage = () => {
+        if (!inputText.trim()) return;
+    
+        // 소켓으로 메시지 보내기
+        socketRef.current.emit("send-message", {
+          mentoringId,
+          message: inputText,
+        });
+    
+        // 내가 보낸 메시지 화면에 바로 보여주기
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now(), isMine: true, text: inputText },
+        ]);
+        setInputText("");
+    
+    };
+
 
     return (
         <Wrapper>
@@ -49,11 +127,9 @@ export const Chatting = () => {
                 <FinishBox>
                     <TextWrapper>
                         <Text variant="Caption">마무리 하기</Text>
-                        <Text variant="Caption" color="gray.700">(0/2)</Text>
+                        <Text variant="Caption" color="gray.700">({finishCount}/2)</Text>
                     </TextWrapper>
-                    <Link to={'/firstPage'}>
-                        <FinishButton>끝내기</FinishButton>
-                    </Link>
+                    <FinishButton onClick={handleFinish} disabled={loading}>끝내기</FinishButton>
                 </FinishBox>
                 <ContentWrapper>
                     <DateLine>
@@ -68,7 +144,7 @@ export const Chatting = () => {
 
                         return (
                             <Message key={`${index}-${msg.text}`} isMine={msg.isMine} marginTop={marginTop}>
-                                {msg.text}
+                            {msg.text}
                             </Message>
                         );
                     })}
@@ -76,8 +152,9 @@ export const Chatting = () => {
                 </ContentWrapper>
             </SubWrapper>
             <BottomWrapper>
-                <Input placeholder="메시지 입력 ..."></Input>
-                <SendButton>
+                <Input  placeholder="메시지 입력 ..." value={inputText} onChange={(e) => setInputText(e.target.value)}></Input>
+                <Link to={'/firstPage'}></Link>
+                <SendButton onClick={handleSendMessage}>
                     <img src={SendIcon} alt="" />
                 </SendButton>
             </BottomWrapper>

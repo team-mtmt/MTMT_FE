@@ -2,32 +2,72 @@ import styled from "styled-components"
 import { Text } from "../components/Text";
 import RatingImg from "../assets/imgs/ratings/good.svg";
 import MapIcon from "../assets/imgs/mapIcon.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ProfileIntro } from "../components/profileInfo";
 import { ProfileReview } from "../components/profileInfo";
 import { ProfileCurriculum } from "../components/profileInfo";
 import { Toast } from "../components/toast";
+import { postMentoringApply } from "../apis";
+import { getMentoDetail } from "../apis";
+import { useParams } from "react-router-dom";
 
 export const Profile = () => {
+    const { id } = useParams<{ id: string }>();
     const [toastVisible, setToastVisible] = useState(false);
     const [toastFadeClass, setToastFadeClass] = useState("fade-in");
     const [active, setActive] = useState<boolean>(true);
     const [selected, setSelected] = useState<number | 0>(0);
     const categories = ['자기소개', '후기', '커리큘럼'];
+    const [mentor, setMentor] = useState<any>(null);
+    const [applyData, setApplyData] = useState({
+        mentorId: "mentor-id-123",
+        subject: "수학 멘토링",
+        startDate: "2025-07-17",
+        endDate: "2025-07-17",
+    });
 
-    const handleApplyClick = () => {
+    const handleApplyClick = async () => {
         setActive(false);
-        setToastVisible(true);
-        setToastFadeClass("fade-in"); 
-      
-        setTimeout(() => {
-          setToastFadeClass("fade-out"); 
-        }, 1500);
-      
-        setTimeout(() => {
-          setToastVisible(false); 
-        }, 2000);
-    }
+    
+        try {
+          const response = await postMentoringApply(applyData);
+          console.log("신청 성공", response.data);
+    
+          setToastVisible(true);
+          setToastFadeClass("fade-in");
+    
+          setTimeout(() => {
+            setToastFadeClass("fade-out");
+          }, 1500);
+    
+          setTimeout(() => {
+            setToastVisible(false);
+          }, 2000);
+        } catch (error) {
+          console.error("신청 실패", error);
+          setActive(true);
+        }
+    };
+
+    useEffect(() => {
+        if (!id) return;
+        const fetchMentor = async () => {
+          try {
+            const res = await getMentoDetail(id);
+            setMentor(res.data.mentor);
+          } catch (error) {
+            console.error("멘토 프로필 불러오기 실패", error);
+          }
+        };
+        fetchMentor();
+      }, [id]);
+
+      useEffect(() => {
+        if (mentor?.id) {
+          setApplyData((prev) => ({ ...prev, mentorId: mentor.id }));
+        }
+      }, [mentor]);
+    
 
     return (
         <Wrapper>
@@ -55,7 +95,7 @@ export const Profile = () => {
                                 <img src={MapIcon} alt="" />
                                 <Text variant="Caption" color="gray.400">지역</Text>
                             </LocationTitle>
-                            <Text variant="Caption">대전 광역시, 중구 문화동</Text>
+                            <Text variant="Caption">대전광역시, 유성구</Text>
                         </LocationWrapper>
                     </SubWrapper>
                     <Line />

@@ -1,16 +1,15 @@
 import styled from "styled-components"
 import { Text } from "./Text";
-import { useState } from "react";
 
-export const ReviewBox = ({ children }: { children: React.ReactNode }) => {
-    const [selected, setSelected] = useState(false);
+type ReviewBoxProps = {
+    children: React.ReactNode;
+    selected: boolean;
+    onClick: () => void;
+};
 
-    const handleClick = () => {
-        setSelected((prev) => !prev);
-    };
-
+export const ReviewBox = ({ children, selected, onClick }: ReviewBoxProps) => {
     return (
-        <ReviewBoxWrapper $selected={selected} onClick={handleClick}>
+        <ReviewBoxWrapper $selected={selected} onClick={onClick}>
             <Text variant="Button" color={selected ? "black" : "gray.700"}>{children}</Text>
         </ReviewBoxWrapper>
     )

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 export const SecondPage = () => {
     const navigate = useNavigate();
-    const participatedDays = [3, 6];
     const dayNumbers = [1, 2, 3, 4, 5, 6, 7];
     const fullDayNames = [
         { label: "일", day: 0 },
@@ -56,16 +55,15 @@ export const SecondPage = () => {
                     </DateNames>
                     <DateNumbers>
                         {dayNumbers.map((num, index) => {
-                            const currentDay = rotatedDayNames[index].day;
-                            const isChecked = participatedDays.includes(currentDay);
+                            const isOne = num === 1;
 
                             return (
-                                <CheckWrapper key={num}>
-                                {isChecked && <img src={CheckIcon} alt="check" />}
-                                <Text variant="Caption" color="main.400" weight={700}>
-                                    {num}
+                            <CheckWrapper key={num}>
+                                {isOne && <img src={CheckIcon} alt="check" />}
+                                <Text variant="Caption" color="main.400" weight={700} style={{ visibility: isOne ? 'hidden' : 'visible' }}>
+                                {num}
                                 </Text>
-                                </CheckWrapper>
+                            </CheckWrapper>
                             );
                         })}
                     </DateNumbers>

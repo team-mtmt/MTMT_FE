@@ -12,7 +12,7 @@ instance.interceptors.request.use(
     const token = localStorage.getItem('token');
 
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsIm5hbWUiOiLrsJXrqZjti7AiLCJlbWFpbCI6Im1lbnRlZUBleGFtcGxlLmNvbSIsInJvbGUiOiJNRU5URUUiLCJpYXQiOjE3NTI3Mjk1ODYsImV4cCI6MTc1Mjc0Mzk4Nn0.LLYNx4GHkNRbJyq0CepmqHi9zcmybb1UiPJAwEAYX6Q`;
     }
 
     return config;

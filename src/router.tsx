@@ -16,6 +16,7 @@ import { ProfileEdit } from "./pages/profile/edit";
 import { ProfileIntroEdit } from "./pages/profile/introduceEdit";
 import { Curriculum } from "./pages/profile/curriculum";
 import { Mento } from "./pages/mento";
+import { StartFindMento } from "./pages/startFindMento";
 
 export const Router = () => {
     return (
@@ -26,7 +27,7 @@ export const Router = () => {
                     <Route path="/" element={<Home/>} />
                     <Route path="/findMento" element={<Matching />}/>
                     <Route path="/noChatting" element={<NoChatting />}/>
-                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/:id" element={<Profile />} />
                     <Route path="/chatting" element={<Chatting />}/>
                     <Route path="/firstPage" element={<FirstPage/>} />
                     <Route path="/secondPage" element={<SecondPage />}/>
@@ -37,6 +38,7 @@ export const Router = () => {
                     <Route path="/editIntro" element={<ProfileIntroEdit/>}/>
                     <Route path="/curriculum" element={<Curriculum/>}/>
                     <Route path="/mento" element={<Mento />}/>
+                    <Route path="/start" element={<StartFindMento />}/>
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
