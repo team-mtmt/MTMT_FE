@@ -120,8 +120,9 @@ const ProfileWrapper = styled.div`
 const ProfileImg = styled.div`
     width: 32px;
     height: 32px;
-    background-color: black;
+    background-color: white;
     border-radius: 50px;
+    border: 0.2px solid ${({theme}) => theme.colors.gray[300]};
 `;
 
 const NameWrapper = styled.div`

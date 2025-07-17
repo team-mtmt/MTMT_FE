@@ -106,7 +106,9 @@ const ContentBox = styled.div`
 const Picture = styled.div`
     width: 60px;
     height: 60px;
-    background-color: black;
+    background-color: white;
+    border: 0.2px solid ${({theme}) => theme.colors.gray[300]};
+    border-radius: 4px;
 `;
 
 const ContentWrapper = styled.div`

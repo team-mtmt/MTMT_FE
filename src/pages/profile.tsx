@@ -135,7 +135,8 @@ const ProfileImg = styled.div`
     width: 60px;
     height: 60px;
     border-radius: 50px;
-    background-color: black;
+    background-color: white;
+    border: 0.2px solid ${({theme}) => theme.colors.gray[300]};
 `;
 
 const TagWrapper = styled.div`

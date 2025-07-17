@@ -79,7 +79,8 @@ const ProfileImg = styled.div`
     width: 80px;
     height: 80px;
     border-radius: 50px;
-    background-color: black;
+    background-color: white;
+    border: 0.2px solid ${({theme}) => theme.colors.gray[300]};
 `;
 
 const TextInfoWrapper = styled.div`
