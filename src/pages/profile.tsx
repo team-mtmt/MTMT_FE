@@ -10,6 +10,7 @@ import { Toast } from "../components/toast";
 import { postMentoringApply } from "../apis";
 import { getMentoDetail } from "../apis";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
     const { id } = useParams<{ id: string }>();
@@ -25,49 +26,58 @@ export const Profile = () => {
         startDate: "2025-07-17",
         endDate: "2025-07-17",
     });
+    const navigate = useNavigate();
+    const handleNext = () => {
+        navigate('/chatting');
+    }
 
-    const handleApplyClick = async () => {
-        setActive(false);
+    // const handleApplyClick = async () => {
+    //     setActive(false);
     
-        try {
-          const response = await postMentoringApply(applyData);
-          console.log("신청 성공", response.data);
+    //       setToastVisible(true);
+    //       setToastFadeClass("fade-in");
     
-          setToastVisible(true);
-          setToastFadeClass("fade-in");
+    //       setTimeout(() => {
+    //         setToastFadeClass("fade-out");
+    //       }, 1500);
     
-          setTimeout(() => {
-            setToastFadeClass("fade-out");
-          }, 1500);
-    
-          setTimeout(() => {
-            setToastVisible(false);
-          }, 2000);
-        } catch (error) {
-          console.error("신청 실패", error);
-          setActive(true);
-        }
-    };
+    //       setTimeout(() => {
+    //         setToastVisible(false);
+    //       }, 2000);
+    // };
 
-    useEffect(() => {
-        if (!id) return;
-        const fetchMentor = async () => {
-          try {
-            const res = await getMentoDetail(id);
-            setMentor(res.data.mentor);
-          } catch (error) {
-            console.error("멘토 프로필 불러오기 실패", error);
-          }
-        };
-        fetchMentor();
-      }, [id]);
+    // useEffect(() => {
+    //     if (!id) return;
+    //     const fetchMentor = async () => {
+    //       try {
+    //         const res = await getMentoDetail(id);
+    //         setMentor(res.data.mentor);
+    //       } catch (error) {
+    //         console.error("멘토 프로필 불러오기 실패", error);
+    //       }
+    //     };
+    //     fetchMentor();
+    //   }, [id]);
 
-      useEffect(() => {
-        if (mentor?.id) {
-          setApplyData((prev) => ({ ...prev, mentorId: mentor.id }));
-        }
-      }, [mentor]);
+    //   useEffect(() => {
+    //     if (mentor?.id) {
+    //       setApplyData((prev) => ({ ...prev, mentorId: mentor.id }));
+    //     }
+    //   }, [mentor]);
     
+
+    const handleApplyClick = () => {
+        setToastVisible(true);
+        setToastFadeClass("fade-in");
+      
+        setTimeout(() => {
+          setToastFadeClass("fade-out");
+        }, 1500);
+      
+        setTimeout(() => {
+          setToastVisible(false);
+        }, 2000);
+      };
 
     return (
         <Wrapper>
@@ -119,7 +129,7 @@ export const Profile = () => {
                 </ToastContainer>
             )}
             <BottomWrapper>
-                <Button $active={active} onClick={handleApplyClick} disabled={!active}>
+                <Button onClick={handleApplyClick}>
                     <Text variant="Caption" color="white">신청하기</Text>
                 </Button>
             </BottomWrapper>
@@ -232,11 +242,11 @@ const BottomWrapper = styled.div`
     padding: 12px 24px 20px 24px;
 `;
 
-const Button = styled.button<{$active: boolean}>`
+const Button = styled.button`
     width: 100%;
     height: 57px;
     border: none;
-    background-color: ${({theme, $active}) => ($active ? theme.colors.main[500] : theme.colors.gray[500])};
+    background-color: ${({theme}) => theme.colors.main[500]};
     border-radius: 10px;
     outline: none;
 `;
