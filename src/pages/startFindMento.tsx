@@ -7,7 +7,7 @@ export const StartFindMento = () => {
     const navigate = useNavigate(); 
 
     const handleNext = () => {
-        navigate("/secondPage");
+        navigate("/findMento");
     };
     return (
       <Wrapper>
