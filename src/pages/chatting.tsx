@@ -19,6 +19,8 @@ export const Chatting = () => {
     const navigate = useNavigate();
     const [inputText, setInputText] = useState("");
     const socketRef = useRef<any>(null);
+    const today = new Date();
+    const formattedDate = `${today.getMonth() + 1}월 ${today.getDate()}일`;
 
     const token = localStorage.getItem("accessToken");
 
@@ -135,7 +137,7 @@ export const Chatting = () => {
                 <ContentWrapper>
                     <DateLine>
                         <DateBox>
-                            <Text variant="Button" color="gray.200">7월 15일</Text>
+                            <Text variant="Button" color="gray.200">{formattedDate}</Text>
                         </DateBox>
                     </DateLine>
                     {messages.map((msg, index) => {
