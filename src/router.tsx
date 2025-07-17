@@ -27,7 +27,7 @@ export const Router = () => {
                     <Route path="/" element={<Home/>} />
                     <Route path="/findMento" element={<Matching />}/>
                     <Route path="/noChatting" element={<NoChatting />}/>
-                    <Route path="/profile/:id" element={<Profile />} />
+                    <Route path="/profile" element={<Profile />} />
                     <Route path="/chatting" element={<Chatting />}/>
                     <Route path="/firstPage" element={<FirstPage/>} />
                     <Route path="/secondPage" element={<SecondPage />}/>
