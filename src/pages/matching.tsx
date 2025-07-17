@@ -9,25 +9,25 @@ import { useEffect } from "react";
 
 export const Matching = () => {
     const [selected, setSelected] = useState<number | 0>(0);
+    const categories = ['운동', '음악', '미술'];
     const [mentors, setMentors] = useState<{ [key: string]: any[] }>({});
 
-    const categories = Object.keys(mentors);
 
-    useEffect(() => {
-    const fetchMentors = async () => {
-        try {
-        const res = await axios.get("/matching");
-        setMentors(res.data);
-        } catch (error) {
-        console.error(error);
-        }
-    };
+useEffect(() => {
+  const fetchMentors = async () => {
+    try {
+      const res = await axios.get("/matching");
+      setMentors(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    fetchMentors();
-    }, []);
+  fetchMentors();
+}, []);
 
-    const selectedCategory = categories[selected] || "";
-    const selectedMentors = mentors[selectedCategory] || [];
+const selectedCategory = categories[selected] || "";
+const selectedMentors = mentors[selectedCategory] || [];
 
     return (
         <Wrapper>
