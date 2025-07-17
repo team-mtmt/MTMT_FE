@@ -8,6 +8,7 @@ import { putMentoringEnd } from "../apis";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
+import Img from "../assets/imgs/testImg.svg";
 
 export const Chatting = () => {
     const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -115,7 +116,7 @@ export const Chatting = () => {
             <SubWrapper>
                 <TopWrpaper>
                     <ProfileWrapper>
-                        <ProfileImg />
+                        <ProfileImg src={Img} />
                         <NameWrapper>
                             <Text variant="Caption">손희찬</Text>
                         </NameWrapper>
@@ -194,10 +195,9 @@ const ProfileWrapper = styled.div`
     gap: 12px;
 `;
 
-const ProfileImg = styled.div`
+const ProfileImg = styled.img`
     width: 32px;
     height: 32px;
-    background-color: white;
     border-radius: 50px;
     border: 0.2px solid ${({theme}) => theme.colors.gray[300]};
 `;

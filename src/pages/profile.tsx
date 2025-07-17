@@ -11,6 +11,7 @@ import { postMentoringApply } from "../apis";
 import { getMentoDetail } from "../apis";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Img from "../assets/imgs/testImg.svg";
 
 export const Profile = () => {
     const { id } = useParams<{ id: string }>();
@@ -92,7 +93,7 @@ export const Profile = () => {
                                 </NameInfo>
                                 <Text variant="Caption" color="gray.700">남자 | 18세</Text>
                             </NameWrapper>
-                            <ProfileImg />
+                            <ProfileImg src={Img} />
                         </TitleWrapper>
                         <TagWrapper>
                             <TagBox>
@@ -181,11 +182,10 @@ const NameInfo = styled.div`
     gap: 8px;
 `;
 
-const ProfileImg = styled.div`
+const ProfileImg = styled.img`
     width: 60px;
     height: 60px;
     border-radius: 50px;
-    background-color: white;
     border: 0.2px solid ${({theme}) => theme.colors.gray[300]};
 `;
 

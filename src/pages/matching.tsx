@@ -4,6 +4,7 @@ import { useState } from "react";
 import RatingImg from "../assets/imgs/ratings/veryGood.svg";
 import { Tag } from "../components/tag";
 import { Link } from "react-router-dom";
+import Img from "../assets/imgs/testImg.svg";
 
 export const Matching = () => {
     const [selected, setSelected] = useState<number | 0>(0);
@@ -25,7 +26,7 @@ export const Matching = () => {
             <ContentBoxWrapper>
                 <Link to={'/profile'}>
                     <ContentBox>
-                        <Picture />
+                        <Picture src={Img} />
                         <ContentWrapper>
                             <NameWrapper>
                                 <Text variant="Caption">손희찬</Text>
@@ -37,7 +38,7 @@ export const Matching = () => {
                     </ContentBox>
                 </Link>
                 <ContentBox>
-                    <Picture />
+                    <Picture src={Img} />
                     <ContentWrapper>
                         <NameWrapper>
                             <Text variant="Caption">손희찬</Text>
@@ -48,7 +49,7 @@ export const Matching = () => {
                     </ContentWrapper>
                 </ContentBox>
                 <ContentBox>
-                    <Picture />
+                    <Picture src={Img} />
                     <ContentWrapper>
                         <NameWrapper>
                             <Text variant="Caption">손희찬</Text>
@@ -103,10 +104,9 @@ const ContentBox = styled.div`
     gap: 12px;
 `;
 
-const Picture = styled.div`
+const Picture = styled.img`
     width: 60px;
     height: 60px;
-    background-color: white;
     border: 0.2px solid ${({theme}) => theme.colors.gray[300]};
     border-radius: 4px;
 `;

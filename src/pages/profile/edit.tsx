@@ -4,11 +4,13 @@ import NextIcon from "../../assets/imgs/nextButton.svg";
 import ChangeIcon from "../../assets/imgs/changeIcon.svg";
 import { Toast } from "../../components/toast";
 import { useState } from "react";
+import Img from "../../assets/imgs/testImg.svg";
 
 export const ProfileEdit = () => {
     const [toastVisible, setToastVisible] = useState(false);
     const [toastFadeClass, setToastFadeClass] = useState("fade-in");
     const [isRotating, setIsRotating] = useState(false);
+    const [isMentee, setIsMentee] = useState(true);
 
     const handleSaveClick = () => {
         setToastVisible(true);
@@ -25,15 +27,16 @@ export const ProfileEdit = () => {
 
     const handleRotateClick = () => {
         setIsRotating(true);
+        setIsMentee((prev) => !prev); // 멘토/멘티 전환
         setTimeout(() => {
           setIsRotating(false);
         }, 1000);
-    };
+      };
 
     return (
         <Wrapper>
             <SubWrapper>
-                <ProfileImg />
+                <ProfileImg src={Img} />
                 <InputWrapper>
                     <InputBox>
                         <Text variant="Button" color="gray.300">이름</Text>
@@ -54,7 +57,7 @@ export const ProfileEdit = () => {
                         <img src={NextIcon} alt="" />
                     </Nav>
                     <Nav>
-                        <Text variant="Caption" color="gray.700">멘티로 전환</Text>
+                        <Text variant="Caption" color="gray.700">{isMentee ? "멘티로 전환" : "멘토로 전환"}</Text>
                         <RotatingIcon
                             src={ChangeIcon}
                             alt=""
@@ -93,7 +96,6 @@ const SubWrapper = styled.div`
 const ProfileImg = styled.img`
     width: 83px;
     height: 83px;
-    background-color: white;
     border-radius: 50px;
     border: 0.2px solid ${({theme}) => theme.colors.gray[300]};
 `;

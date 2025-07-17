@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { postReview } from "../../apis";
 import { MentoringEvaluation } from "../../apis/type";
 import { useState } from "react";
+import Img from "../../assets/imgs/testImg.svg";
 
 export const ReviewWrite = () => {
     const [selectedEvaluations, setSelectedEvaluations] = useState<MentoringEvaluation[]>([]);
@@ -50,7 +51,7 @@ export const ReviewWrite = () => {
     return (
         <Wrapper>
             <ProfileInfoWrapper>
-                <ProfileImg />
+                <ProfileImg src={Img} />
                 <TextInfoWrapper>
                     <NameWrapper>
                         <Text variant="Label" weight={700}>손희찬</Text>
@@ -105,11 +106,10 @@ const ProfileInfoWrapper = styled.div`
     margin-top: 32px;
 `;
 
-const ProfileImg = styled.div`
+const ProfileImg = styled.img`
     width: 80px;
     height: 80px;
     border-radius: 50px;
-    background-color: white;
     border: 0.2px solid ${({theme}) => theme.colors.gray[300]};
 `;
 
